@@ -7,18 +7,12 @@ const config = require('./knexfile');
 const knex = require('knex')(config[env]);
 const bookshelf = require('bookshelf')(knex);
 
+const Battle = require('./models/battles')
+const Monster = require('./models/monsters')
+
 bookshelf.plugin('registry')
 
-const Monster = bookshelf.Model.extend({
-  tableName: 'monsters',
-  idAttribute: 'monster_id',
-  battles: function() {
-    return this.hasMany(Battle, 'monster_id')
-  }
 
-});
-
-bookshelf.model('Monster', Monster)
 
 
 var monster = new Monster();  
@@ -43,22 +37,8 @@ monster.set('monster_name', 'Sully');
 
 // module.exports = bookshelf.model('Meal', Meal)
 
-let Battle = bookshelf.Model.extend({
-  tableName: 'battles',
-  monster: function() {
-    return this.belongsTo('Monster', 'monster_id');
-  },
-  hero: function() {
-    return this.belongsTo(hero, 'hero_id');
-  }
 
-},  {
-    byLocation: function(location) {
-    return this.forge().query({where:{ location: location }}).fetch();
-  }
-});
 
-bookshelf.model('Battle', Battle)
 
 Battle.byLocation('Rhodes').then(function(u) {  
     console.log('Got battle:', u.get('monster_id'), u.get('hero_id'));
