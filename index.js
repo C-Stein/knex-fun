@@ -1,16 +1,8 @@
-// The knex module is itself a function which takes a configuration 
-// object for Knex, accepting a few parameters. The client parameter 
-// is required and determines which client adapter will be used with 
-// the library.
-const env = process.env.NODE_ENV || 'development';
-const config = require('./knexfile');
-const knex = require('knex')(config[env]);
-const bookshelf = require('bookshelf')(knex);
+const { bookshelf } = require('./db/bookshelf.js')
 
 const Battle = require('./models/battles')
 const Monster = require('./models/monsters')
 
-bookshelf.plugin('registry')
 
 
 
@@ -22,22 +14,6 @@ monster.set('monster_name', 'Sully');
 // monster.save().then(function(m) {  
 //     console.log('Monster saved:', m.get('monster_name'));
 // });
-
-//bookshelf.model(name, [Model]) => Model
-
-// const Meal = bookshelf.Model.extend({
-//   tableName: 'meals',
-//   sides: function() {
-//     return this.belongsToMany('Side').through('SideSelection')
-//   },
-//   proteins: function() {
-//     return this.belongsTo(Protein)
-//   }
-// })
-
-// module.exports = bookshelf.model('Meal', Meal)
-
-
 
 
 Battle.byLocation('Rhodes').then(function(u) {  
