@@ -2,6 +2,7 @@ const { bookshelf } = require('./db/bookshelf.js')
 
 const Battle = require('./models/battles')
 const Monster = require('./models/monsters')
+const Weapon = require('./models/weapons')
 
 
 
